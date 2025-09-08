@@ -1,0 +1,20 @@
+#include <stdio.h>
+int binarySearch(int arr[], int n, int key) {
+    int low=0, high=n-1, mid;
+    while(low<=high) {
+        mid=(low+high)/2;
+        if(arr[mid]==key) return mid;
+        else if(arr[mid]<key) low=mid+1;
+        else high=mid-1;
+    }
+    return -1;
+}
+int main() {
+    int arr[10],n,i,key,res;
+    scanf("%d",&n);
+    for(i=0;i<n;i++) scanf("%d",&arr[i]);
+    scanf("%d",&key);
+    res=binarySearch(arr,n,key);
+    if(res==-1) printf("Not found");
+    else printf("Found at %d",res);
+}
