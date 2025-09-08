@@ -1,21 +1,14 @@
 #include <stdio.h>
 
-int binarySearch(int arr[], int n, int key) {
-    int l = 0, r = n - 1;
-    while (l <= r) {
-        int mid = (l + r) / 2;
-        if (arr[mid] == key) return mid;
-        else if (arr[mid] < key) l = mid + 1;
-        else r = mid - 1;
-    }
-    return -1;
-}
-
 int main() {
-    int arr[] = {10, 20, 30, 40, 50};
-    int n = 5, key = 40;
-    int result = binarySearch(arr, n, key);
-    if (result != -1) printf("Found at index %d", result);
-    else printf("Not found");
+    int arr[] = {1, 8, 30, 40, 100};
+    int n = 5, k = 60;
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (arr[j] - arr[i] == k || arr[i] - arr[j] == k) {
+                printf("Pair: %d %d\n", arr[i], arr[j]);
+            }
+        }
+    }
     return 0;
 }
