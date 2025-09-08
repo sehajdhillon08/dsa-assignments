@@ -1,0 +1,11 @@
+#include <stdio.h>
+int main() {
+    int n = 4, nz = 6;
+    printf("Diagonal Matrix: %d\n", n);
+    printf("Tri-diagonal Matrix: %d\n", 3 * n - 2);
+    printf("Lower Triangular Matrix: %d\n", (n * (n + 1)) / 2);
+    printf("Upper Triangular Matrix: %d\n", (n * (n + 1)) / 2);
+    printf("Symmetric Matrix: %d\n", (n * (n + 1)) / 2);
+    printf("Sparse Matrix: %d\n", nz);
+    return 0;
+}
