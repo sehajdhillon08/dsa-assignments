@@ -1,0 +1,24 @@
+#include <stdio.h>   // part a
+int main() {
+    int arr[100],n,i;
+    scanf("%d",&n);
+    for(i=0;i<n-1;i++) scanf("%d",&arr[i]);
+    for(i=1;i<=n;i++) {
+        int found=0,j;
+        for(j=0;j<n-1;j++) if(arr[j]==i) found=1;
+        if(!found) { printf("%d",i); break; }
+    }
+}
+#include <stdio.h>    // part b
+int main() {
+    int arr[100],n,i,low,high,mid;
+    scanf("%d",&n);
+    for(i=0;i<n-1;i++) scanf("%d",&arr[i]);
+    low=0; high=n-2;
+    while(low<=high) {
+        mid=(low+high)/2;
+        if(arr[mid]==mid+1) low=mid+1;
+        else high=mid-1;
+    }
+    printf("%d",low+1);
+}
