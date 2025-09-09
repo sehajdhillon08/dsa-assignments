@@ -1,0 +1,15 @@
+#include <stdio.h>
+#include <ctype.h>
+int main() {
+    char str[] = "The quick brown fox jumps over the lazy dog";
+    int seen[26] = {0}, i;
+    for (i = 0; str[i]; i++) {
+        if (isalpha(str[i])) seen[tolower(str[i]) - 'a'] = 1;
+    }
+    for (i = 0; i < 26; i++) if (!seen[i]) {
+        printf("Not Pangram\n");
+        return 0;
+    }
+    printf("Pangram\n");
+    return 0;
+}
