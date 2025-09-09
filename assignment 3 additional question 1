@@ -1,0 +1,16 @@
+#include <stdio.h>
+#include <stdlib.h>
+int main() {
+    int arr[] = {5, 20, 3, 2, 50, 80};
+    int n = 6, diff = 78;
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (abs(arr[i] - arr[j]) == diff) {
+                printf("Pair: %d %d\n", arr[i], arr[j]);
+                return 0;
+            }
+        }
+    }
+    printf("No pair found\n");
+    return 0;
+}
