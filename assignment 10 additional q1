@@ -1,0 +1,20 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int n; cin>>n;
+    vector<int>a(n);
+    for(int &x:a) cin>>x;
+
+    unordered_map<int,int>mp;
+    for(int x:a) mp[x]++;
+
+    int best=-1,bfreq=0;
+    for(auto &p:mp){
+        if(p.second>bfreq || (p.second==bfreq && p.first>best)){
+            best=p.first;
+            bfreq=p.second;
+        }
+    }
+    cout<<best;
+}
