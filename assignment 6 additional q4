@@ -1,0 +1,48 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Node{
+    int data;
+    Node* prev;
+    Node* next;
+    Node* random;
+    Node(int x){data=x;prev=next=random=NULL;}
+};
+Node* head=NULL;
+
+void insert(int x){
+    Node* n=new Node(x);
+    if(!head){head=n;return;}
+    Node* t=head;
+    while(t->next) t=t->next;
+    t->next=n;
+    n->prev=t;
+}
+
+vector<Node*> getList(){
+    vector<Node*> v;
+    Node* t=head;
+    while(t){v.push_back(t); t=t->next;}
+    return v;
+}
+
+void fixRandom(){
+    vector<Node*> v=getList();
+    for(int i=0;i<v.size();i++)
+        v[i]->random=v[i];
+}
+
+int main(){
+    int x;
+    while(cin>>x){
+        if(x==-1) break;
+        insert(x);
+    }
+
+    auto v=getList();
+    if(v.size()>1) v[1]->random=v[0];
+
+    fixRandom();
+
+    for(auto n:getList()) cout<<n->random->data<<" ";
+}
