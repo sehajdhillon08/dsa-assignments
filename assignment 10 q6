@@ -1,0 +1,31 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Node{
+    int val;
+    Node* left;
+    Node* right;
+    Node(int x){val=x;left=right=NULL;}
+};
+
+Node* build(){
+    int x; cin>>x;
+    if(x==-1) return NULL;
+    Node* r=new Node(x);
+    r->left=build();
+    r->right=build();
+    return r;
+}
+
+bool checkDup(Node* r, unordered_set<int>&s){
+    if(!r) return false;
+    if(s.count(r->val)) return true;
+    s.insert(r->val);
+    return checkDup(r->left,s) || checkDup(r->right,s);
+}
+
+int main(){
+    Node* root=build();
+    unordered_set<int>s;
+    cout<<(checkDup(root,s) ? "Duplicates Found" : "No Duplicates");
+}
