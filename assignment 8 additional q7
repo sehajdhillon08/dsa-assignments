@@ -1,0 +1,64 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Node{
+    int val;
+    Node *left,*right;
+    Node(int x){val=x;left=right=NULL;}
+};
+
+Node* insertBST(Node* r,int x){
+    if(!r) return new Node(x);
+    if(x<r->val) r->left=insertBST(r->left,x);
+    else r->right=insertBST(r->right,x);
+    return r;
+}
+
+void inorder(Node* r, vector<int>&v){
+    if(!r) return;
+    inorder(r->left,v);
+    v.push_back(r->val);
+    inorder(r->right,v);
+}
+
+struct DNode{
+    int val;
+    DNode *prev,*next;
+    DNode(int x){val=x;prev=next=NULL;}
+};
+
+DNode* buildDLL(vector<int>&v){
+    if(v.empty()) return NULL;
+    DNode* head=new DNode(v[0]);
+    DNode* cur=head;
+    for(int i=1;i<v.size();i++){
+        DNode* n=new DNode(v[i]);
+        cur->next=n;
+        n->prev=cur;
+        cur=n;
+    }
+    return head;
+}
+
+int main(){
+    int n1,n2,x;
+    cin>>n1;
+    Node* t1=NULL;
+    while(n1--){cin>>x; t1=insertBST(t1,x);}
+    cin>>n2;
+    Node* t2=NULL;
+    while(n2--){cin>>x; t2=insertBST(t2,x);}
+
+    vector<int>a,b;
+    inorder(t1,a);
+    inorder(t2,b);
+
+    vector<int> c;
+    merge(a.begin(),a.end(),b.begin(),b.end(), back_inserter(c));
+
+    DNode* h=buildDLL(c);
+    while(h){
+        cout<<h->val<<" ";
+        h=h->next;
+    }
+}
