@@ -1,0 +1,56 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Node{
+    int data;
+    Node* next;
+    Node* prev;
+    Node(int x){data=x;next=prev=NULL;}
+};
+Node* head=NULL;
+
+void insert(int x){
+    Node* n=new Node(x);
+    if(!head){head=n;return;}
+    Node* t=head;
+    while(t->next) t=t->next;
+    t->next=n;
+    n->prev=t;
+}
+
+Node* reverseK(Node* h,int k){
+    Node* curr=h;
+    Node* prev=NULL;
+    Node* nxt=NULL;
+    int c=0;
+
+    while(curr && c<k){
+        nxt=curr->next;
+        curr->next=prev;
+        curr->prev=nxt;
+        prev=curr;
+        curr=nxt;
+        c++;
+    }
+    if(nxt){
+        h->next=reverseK(nxt,k);
+        if(h->next) h->next->prev=h;
+    }
+    return prev;
+}
+
+void print(){
+    Node* t=head;
+    while(t){cout<<t->data<<" "; t=t->next;}
+}
+
+int main(){
+    int x,k;
+    while(cin>>x){
+        if(x==-1) break;
+        insert(x);
+    }
+    cin>>k;
+    head=reverseK(head,k);
+    print();
+}
