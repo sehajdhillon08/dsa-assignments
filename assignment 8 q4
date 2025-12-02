@@ -1,0 +1,29 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Node{
+    int data;
+    Node* left;
+    Node* right;
+    Node(int x){data=x;left=right=NULL;}
+};
+
+Node* build(){
+    int x; cin>>x;
+    if(x==-1) return NULL;
+    Node* r=new Node(x);
+    r->left=build();
+    r->right=build();
+    return r;
+}
+
+bool check(Node* r,long long mn,long long mx){
+    if(!r) return true;
+    if(r->data<=mn || r->data>=mx) return false;
+    return check(r->left,mn,r->data) && check(r->right,r->data,mx);
+}
+
+int main(){
+    Node* root=build();
+    cout<<(check(root,LLONG_MIN,LLONG_MAX)?1:0);
+}
