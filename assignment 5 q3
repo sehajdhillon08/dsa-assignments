@@ -1,0 +1,41 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+};
+
+Node* head = NULL;
+
+void insert(int x) {
+    Node* n = new Node();
+    n->data = x;
+    n->next = NULL;
+
+    if (!head) {
+        head = n;
+        return;
+    }
+    Node* t = head;
+    while (t->next) t = t->next;
+    t->next = n;
+}
+
+int findMiddle() {
+    Node* slow = head;
+    Node* fast = head;
+
+    while (fast && fast->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    return slow->data;
+}
+
+int main() {
+    int arr[] = {1,2,3,4,5};
+    for (int x : arr) insert(x);
+
+    cout << findMiddle();
+}
