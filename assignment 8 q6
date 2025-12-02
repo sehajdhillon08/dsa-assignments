@@ -1,0 +1,46 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<int> h;
+
+void push(int x){
+    h.push_back(x);
+    int i=h.size()-1;
+    while(i>0){
+        int p=(i-1)/2;
+        if(h[p]>=h[i]) break;
+        swap(h[p],h[i]);
+        i=p;
+    }
+}
+
+void pop(){
+    if(h.empty()) return;
+    h[0]=h.back();
+    h.pop_back();
+    int n=h.size(), i=0;
+    while(true){
+        int l=2*i+1, r=2*i+2, mx=i;
+        if(l<n && h[l]>h[mx]) mx=l;
+        if(r<n && h[r]>h[mx]) mx=r;
+        if(mx==i) break;
+        swap(h[i],h[mx]);
+        i=mx;
+    }
+}
+
+int top(){
+    if(h.empty()) return -1;
+    return h[0];
+}
+
+int main(){
+    int q,t,x;
+    cin>>q;
+    while(q--){
+        cin>>t;
+        if(t==1){cin>>x; push(x);}
+        else if(t==2) pop();
+        else cout<<top()<<endl;
+    }
+}
