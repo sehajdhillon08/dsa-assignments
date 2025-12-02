@@ -1,0 +1,40 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int m,n; cin>>m>>n;
+    vector<vector<int>> a(m, vector<int>(n));
+    for(int i=0;i<m;i++)
+        for(int j=0;j<n;j++)
+            cin>>a[i][j];
+
+    vector<vector<int>> dist(m, vector<int>(n, INT_MAX));
+    dist[0][0]=a[0][0];
+
+    priority_queue<
+        tuple<int,int,int>,
+        vector<tuple<int,int,int>>,
+        greater<tuple<int,int,int>>
+    > pq;
+
+    pq.push({a[0][0],0,0});
+
+    int dirs[4][2]={{1,0},{-1,0},{0,1},{0,-1}};
+
+    while(!pq.empty()){
+        auto [d,x,y]=pq.top(); pq.pop();
+        if(d!=dist[x][y]) continue;
+
+        for(auto &dr:dirs){
+            int nx=x+dr[0], ny=y+dr[1];
+            if(nx>=0 && ny>=0 && nx<m && ny<n){
+                if(dist[x][y] + a[nx][ny] < dist[nx][ny]){
+                    dist[nx][ny] = dist[x][y] + a[nx][ny];
+                    pq.push({dist[nx][ny],nx,ny});
+                }
+            }
+        }
+    }
+
+    cout<<dist[m-1][n-1];
+}
