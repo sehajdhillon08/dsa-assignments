@@ -1,0 +1,60 @@
+#include <iostream>
+#include <queue>
+using namespace std;
+
+// Returns index of minimum element in queue among first n elements
+int minIndex(queue<int> &q, int n) {
+    int minVal = INT_MAX, minIdx = -1;
+    int size = q.size();
+
+    for (int i = 0; i < size; i++) {
+        int curr = q.front();
+        q.pop();
+
+        if (i < n && curr < minVal) {
+            minVal = curr;
+            minIdx = i;
+        }
+        q.push(curr);
+    }
+    return minIdx;
+}
+
+// Moves the element at minIndex to the rear
+void insertMinToRear(queue<int> &q, int minIdx) {
+    int size = q.size();
+    int minVal = 0;
+
+    for (int i = 0; i < size; i++) {
+        int curr = q.front();
+        q.pop();
+
+        if (i == minIdx)
+            minVal = curr;
+        else
+            q.push(curr);
+    }
+    q.push(minVal);
+}
+
+void sortQueue(queue<int> &q) {
+    for (int i = q.size(); i > 1; i--) {
+        int minIdx = minIndex(q, i);
+        insertMinToRear(q, minIdx);
+    }
+}
+
+int main() {
+    queue<int> q;
+    q.push(11);
+    q.push(5);
+    q.push(4);
+    q.push(21);
+
+    sortQueue(q);
+
+    while (!q.empty()) {
+        cout << q.front() << " ";
+        q.pop();
+    }
+}
