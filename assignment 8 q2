@@ -1,0 +1,75 @@
+
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Node{
+    int data;
+    Node* left;
+    Node* right;
+    Node(int x){data=x;left=right=NULL;}
+};
+Node* root=NULL;
+
+Node* insertBST(Node* r,int x){
+    if(!r) return new Node(x);
+    if(x<r->data) r->left=insertBST(r->left,x);
+    else r->right=insertBST(r->right,x);
+    return r;
+}
+
+Node* searchRec(Node* r,int x){
+    if(!r || r->data==x) return r;
+    if(x<r->data) return searchRec(r->left,x);
+    return searchRec(r->right,x);
+}
+
+Node* searchNonRec(Node* r,int x){
+    while(r){
+        if(r->data==x) return r;
+        r=x<r->data ? r->left : r->right;
+    }
+    return NULL;
+}
+
+int findMin(Node* r){
+    while(r->left) r=r->left;
+    return r->data;
+}
+
+int findMax(Node* r){
+    while(r->right) r=r->right;
+    return r->data;
+}
+
+Node* inorderSuccessor(Node* r,int x){
+    Node* succ=NULL;
+    while(r){
+        if(x<r->data){succ=r; r=r->left;}
+        else r=r->right;
+    }
+    return succ;
+}
+
+Node* inorderPredecessor(Node* r,int x){
+    Node* pred=NULL;
+    while(r){
+        if(x>r->data){pred=r; r=r->right;}
+        else r=r->left;
+    }
+    return pred;
+}
+
+int main(){
+    int n,x; 
+    cin>>n;
+    while(n--){cin>>x; root=insertBST(root,x);}
+    cin>>x;
+    Node* a=searchRec(root,x);
+    Node* b=searchNonRec(root,x);
+    cout<<(a?1:0)<<" "<<(b?1:0)<<endl;
+    cout<<findMin(root)<<" "<<findMax(root)<<endl;
+    Node* s=inorderSuccessor(root,x);
+    Node* p=inorderPredecessor(root,x);
+    if(s) cout<<s->data<<" "; else cout<<-1<<" ";
+    if(p) cout<<p->data; else cout<<-1;
+}
