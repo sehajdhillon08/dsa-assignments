@@ -1,0 +1,28 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Node{
+    int data;
+    Node *left,*right;
+    Node(int x){data=x;left=right=NULL;}
+};
+
+Node* build(){
+    int x; cin>>x;
+    if(x==-1) return NULL;
+    Node* r=new Node(x);
+    r->left=build();
+    r->right=build();
+    return r;
+}
+
+int sumLeft(Node* r,bool isLeft){
+    if(!r) return 0;
+    if(!r->left && !r->right && isLeft) return r->data;
+    return sumLeft(r->left,true)+sumLeft(r->right,false);
+}
+
+int main(){
+    Node* root=build();
+    cout<<sumLeft(root,false);
+}
