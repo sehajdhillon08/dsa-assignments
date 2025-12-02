@@ -1,0 +1,61 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int parity(int x){
+    int c=0;
+    while(x){c+=x&1; x>>=1;}
+    return c;
+}
+
+struct Node{
+    int data;
+    Node* next;
+    Node(int x){data=x; next=NULL;}
+};
+Node* head=NULL;
+
+void insert(int x){
+    Node* n=new Node(x);
+    if(!head){head=n; n->next=n; return;}
+    Node* t=head;
+    while(t->next!=head) t=t->next;
+    t->next=n;
+    n->next=head;
+}
+
+void removeEvenParity(){
+    if(!head) return;
+    while(head && parity(head->data)%2==0){
+        Node* t=head;
+        Node* last=head;
+        while(last->next!=head) last=last->next;
+        if(head->next==head){head=NULL; return;}
+        head=head->next;
+        last->next=head;
+        delete t;
+    }
+    Node* t=head;
+    while(t->next!=head){
+        if(parity(t->next->data)%2==0){
+            Node* d=t->next;
+            t->next=t->next->next;
+            delete d;
+        }else t=t->next;
+    }
+}
+
+void print(){
+    if(!head) return;
+    Node* t=head;
+    do{
+        cout<<t->data<<" ";
+        t=t->next;
+    }while(t!=head);
+}
+
+int main(){
+    int x;
+    while(cin>>x) insert(x);
+    removeEvenParity();
+    print();
+}
