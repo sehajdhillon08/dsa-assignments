@@ -1,0 +1,53 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Node{
+    int data;
+    Node* next;
+    Node(int x){data=x; next=NULL;}
+};
+Node* head=NULL;
+
+void insert(int x){
+    Node* n=new Node(x);
+    if(!head){head=n; n->next=n; return;}
+    Node* t=head;
+    while(t->next!=head) t=t->next;
+    t->next=n;
+    n->next=head;
+}
+
+void split(Node*& h1, Node*& h2){
+    if(!head){h1=h2=NULL; return;}
+    Node* slow=head;
+    Node* fast=head;
+    while(fast->next!=head && fast->next->next!=head){
+        slow=slow->next;
+        fast=fast->next->next;
+    }
+    h1=head;
+    h2=slow->next;
+    slow->next=head;
+    Node* t=h2;
+    while(t->next!=head) t=t->next;
+    t->next=h2;
+}
+
+void print(Node* h){
+    if(!h) return;
+    Node* t=h;
+    do{
+        cout<<t->data<<" ";
+        t=t->next;
+    }while(t!=h);
+}
+
+int main(){
+    int x;
+    while(cin>>x) insert(x);
+    Node *h1=NULL,*h2=NULL;
+    split(h1,h2);
+    print(h1);
+    cout<<endl;
+    print(h2);
+}
