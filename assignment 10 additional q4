@@ -1,0 +1,40 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Node{
+    int data;
+    Node* next;
+    Node(int x){data=x;next=NULL;}
+};
+
+Node* build(int n){
+    int x; cin>>x;
+    Node* head=new Node(x);
+    Node* t=head;
+    for(int i=1;i<n;i++){
+        cin>>x;
+        t->next=new Node(x);
+        t=t->next;
+    }
+    return head;
+}
+
+int main(){
+    int n1,n2; cin>>n1>>n2;
+    Node *h1=build(n1), *h2=build(n2);
+
+    unordered_set<int> s1, s2;
+    Node* t=h1;
+    while(t){s1.insert(t->data); t=t->next;}
+    t=h2;
+    while(t){s2.insert(t->data); t=t->next;}
+
+    vector<int> inter, uni;
+    for(int x:s1) if(s2.count(x)) inter.push_back(x);
+    for(int x:s1) uni.push_back(x);
+    for(int x:s2) uni.push_back(x);
+
+    for(int x:inter) cout<<x<<" ";
+    cout<<endl;
+    for(int x:uni) cout<<x<<" ";
+}
