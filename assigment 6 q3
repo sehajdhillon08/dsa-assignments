@@ -1,0 +1,28 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Node{
+    int data;
+    Node* next;
+    Node* prev;
+    Node(int x){data=x;next=prev=NULL;}
+};
+Node* head=NULL;
+
+void insert(int x){
+    Node* n=new Node(x);
+    if(!head){head=n;return;}
+    Node* t=head;
+    while(t->next)t=t->next;
+    t->next=n;
+    n->prev=t;
+}
+
+int main(){
+    int x;
+    while(cin>>x) insert(x);
+    int cnt=0;
+    Node* t=head;
+    while(t){cnt++; t=t->next;}
+    cout<<cnt;
+}
